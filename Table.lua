@@ -11,7 +11,7 @@ local Table = {
 			f(v, k, t)
 		end
 	end,
-	foreachi = function(t: {[any]: any}, f: (any, any, {[any]: any}) -> ()): ()
+	foreachi = function(t: {[any]: any}, f: (any, number, {[any]: any}) -> ()): ()
 		for i, v in ipairs(t) do
 			f(v, i, t)
 		end
