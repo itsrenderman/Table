@@ -8,12 +8,12 @@ local Table = {
 	find = table.find,
 	foreach = function(t: {[any]: any}, f: (any, any) -> ()): ()
 		for k, v in t do
-			f(k, v)
+			f(v, k, t)
 		end
 	end,
 	foreachi = function(t: {[any]: any}, f: (any, any) -> ()): ()
 		for i, v in ipairs(t) do
-			f(i, v)
+			f(v, i, t)
 		end
 	end,
 	freeze = table.freeze,
