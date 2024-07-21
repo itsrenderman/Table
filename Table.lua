@@ -6,12 +6,12 @@ local Table = {
 	concat = table.concat,
 	create = table.create,
 	find = table.find,
-	foreach = function(t: {[any]: any}, f: (any, any) -> ()): ()
+	foreach = function(t: {[any]: any}, f: (any, any, {[any]: any}) -> ()): ()
 		for k, v in t do
 			f(v, k, t)
 		end
 	end,
-	foreachi = function(t: {[any]: any}, f: (any, any) -> ()): ()
+	foreachi = function(t: {[any]: any}, f: (any, any, {[any]: any}) -> ()): ()
 		for i, v in ipairs(t) do
 			f(v, i, t)
 		end
