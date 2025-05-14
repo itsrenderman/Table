@@ -1,37 +1,48 @@
 --!strict
 
-local Table = {
-	clear = table.clear,
-	clone = table.clone,
-	concat = table.concat,
-	create = table.create,
-	find = table.find,
-	foreach = function(t: {[any]: any}, f: (any, any, {[any]: any}) -> ()): ()
-		for k, v in t do
-			f(v, k, t)
+local Table = {}
+
+Table.clear = table.clear
+Table.clone = function(tbl: {[any]: any}, shouldDeepClone: boolean?): {[any]: any}
+	if shouldDeepClone then
+		local cloneTbl = Table.clone(tbl, false)
+		for key, value in tbl do
+			if type(value) == "table" then
+				cloneTbl[key] = Table.clone(value, true)
+			end
 		end
-	end,
-	foreachi = function(t: {[any]: any}, f: (any, number, {[any]: any}) -> ()): ()
-		for i, v in ipairs(t) do
-			f(v, i, t)
-		end
-	end,
-	freeze = table.freeze,
-	getn = function(t: {[any]: any}): number
-		local i: number = 0
-		for _ in t do
-			i += 1
-		end
-		return i
-	end,
-	insert = table.insert,
-	isfrozen = table.isfrozen,
-	maxn = table.maxn,
-	move = table.move,
-	pack = table.pack,
-	remove = table.remove,
-	sort = table.sort,
-	unpack = table.unpack
-}
+		return cloneTbl
+	end
+	return table.clone(tbl)
+end
+Table.concat = table.concat
+Table.create = table.create
+Table.find = table.find
+Table.foreach = function(tbl: {[any]: any}, f: (any, any, {[any]: any}) -> ()): ()
+	for k, v in tbl do
+		f(v, k, tbl)
+	end
+end
+Table.foreachi = function(tbl: {[any]: any}, f: (any, number, {[any]: any}) -> ()): ()
+	for i, v in ipairs(tbl) do
+		f(v, i, tbl)
+	end
+end
+Table.freeze = table.freeze
+Table.getn = function(tbl: {[any]: any}): number
+	local i: number = 0
+	for _ in tbl do
+		i += 1
+	end
+	return i
+end
+Table.insert = table.insert
+Table.isfrozen = table.isfrozen
+Table.maxn = table.maxn
+Table.move = table.move
+Table.pack = table.pack
+Table.remove = table.remove
+Table.sort = table.sort
+Table.unpack = table.unpack
 
 return Table
