@@ -1,6 +1,28 @@
 --!strict
+--!native
 
 local Table = {}
+
+Table.getn = function(tbl: {[any]: any}): number
+	local i: number = 0
+	for _ in tbl do
+		i += 1
+	end
+	return i
+end
+Table.isarray = function(tbl: {[any]: any}): boolean
+	return #tbl == Table.getn(tbl)
+end
+Table.remove = function(tbl: {[any]: any}, k: any): any?
+	local v: any? = nil
+	if Table.isarray(tbl) then
+		v = table.remove(tbl, k)
+	else
+		v = tbl[k]
+		tbl[k] = nil
+	end
+	return v
+end
 
 Table.clear = table.clear
 Table.clone = function(tbl: {[any]: any}, isDeepClone: boolean): {[any]: any}
@@ -40,17 +62,7 @@ Table.foreachi = function(tbl: {[any]: any}, f: (any, number, {[any]: any}) -> (
 	end
 end
 Table.freeze = table.freeze
-Table.getn = function(tbl: {[any]: any}): number
-	local i: number = 0
-	for _ in tbl do
-		i += 1
-	end
-	return i
-end
 Table.insert = table.insert
-Table.isarray = function(tbl: {[any]: any}): boolean
-	return #tbl == Table.getn(tbl)
-end
 Table.isfrozen = table.isfrozen
 Table.map = function(tbl: {[any]: any}, f: (any, any, {[any]: any}) -> any): {[any]: any}
 	local newTbl = Table.clone(tbl, true)
@@ -62,16 +74,6 @@ end
 Table.maxn = table.maxn
 Table.move = table.move
 Table.pack = table.pack
-Table.remove = function(tbl: {[any]: any}, k: any): any?
-	local v: any? = nil
-	if Table.isarray(tbl) then
-		v = table.remove(tbl, k)
-	else
-		v = tbl[k]
-		tbl[k] = nil
-	end
-	return v
-end
 Table.sort = table.sort
 Table.unpack = table.unpack
 
