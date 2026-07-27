@@ -34,6 +34,9 @@ Table.clone = function<T>(tbl: T, isDeepClone: boolean): T
 end
 Table.concat = table.concat
 Table.create = table.create
+Table.deepclone = function<T>(tbl: T): T
+	return Table.clone(tbl, true)
+end
 Table.filter = function(tbl: {[any]: any}, f: (any, any, {[any]: any}) -> boolean): {[any]: any}
 	local newTbl = Table.clone(tbl, true)
 	local hasRemovedSomething: boolean = true
