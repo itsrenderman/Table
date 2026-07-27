@@ -25,9 +25,9 @@ Table.remove = function(tbl: {[any]: any}, k: any): any?
 end
 
 Table.clear = table.clear
-Table.clone = function(tbl: {[any]: any}, isDeepClone: boolean): {[any]: any}
+Table.clone = function<T>(tbl: T, isDeepClone: boolean): T
 	local newTbl = {}
-	for k, v in tbl do
+	for k, v in tbl :: {[any]: any} do
 		newTbl[k] = if isDeepClone and typeof(v) == "table" then Table.clone(v, isDeepClone) else v
 	end
 	return newTbl
